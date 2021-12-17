@@ -1,0 +1,135 @@
+#Study of Basic Statistics 
+# Mean - The average value
+# Median - The mid point value of sorted vector
+# Mode - The most common value
+import numpy
+
+speed = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+
+sorted(speed)
+media = numpy.mean(speed)
+mediana = numpy.median(speed)
+
+from scipy import stats
+moda = stats.mode(speed)
+help(sorted)
+
+
+numbers_tuple = (6, 9, 3, 1)
+numbers_set = {5, 5, 10, 1, 0}
+numbers_tuple_sorted = sorted(numbers_tuple)
+numbers_set_sorted = sorted(numbers_set)
+
+string_value = 'I like to sort'
+sorted_string = sorted(string_value)
+
+
+#Standard deviation is a number that describes how spread out the values are.
+
+speed = [86,87,88,86,87,85,86]
+x = numpy.std(speed)
+
+# Variance
+# Variance is another number that indicates how spread out the values are.
+speed = [32,111,138,28,59,77,97]
+x = numpy.var(speed)
+
+# To create big data sets for testing, we use the Python module NumPy, which comes with a number of methods to create random data sets, of any size.
+
+import numpy
+import matplotlib.pyplot as plt
+x = numpy.random.uniform(0.0, 5.0, 250)
+plt.hist(x, 5) #5 barras 
+plt.show()
+
+x = numpy.random.normal(5.0, 1.0, 100000)#média 5 e desvio padrão 1
+plt.hist(x, 100)
+plt.show()
+
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+plt.scatter(x, y)
+plt.show()
+
+x = numpy.random.normal(5.0, 1.0, 1000)
+y = numpy.random.normal(10.0, 2.0, 1000)
+plt.scatter(x, y)
+plt.show()
+
+# Regression
+# The term regression is used when you try to find the relationship between variables.
+
+# In Machine Learning, and in statistical modeling, that relationship is used to predict the outcome of future events.
+from scipy import stats
+import matplotlib.pyplot as plt
+
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+
+def myfunc(x):
+  return slope * x + intercept #coeficientes da reta separadora dos dados
+
+# The map() function executes a specified function for each item in an iterable. The item is sent to the function as a parameter.
+
+mymodel = list(map(myfunc, x))#faz uma lista com f(x)=y=slope*x*intercept
+
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+#to predict
+speed = myfunc(10)
+
+# Coeficiente R de Correlação
+
+# The r value ranges from -1 to 1, where 0 means no relationship, and 1 (and -1) means 100% related.
+from scipy import stats
+
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+
+print(r)
+
+
+#Exemplo de Regressão Linear Com Baixo r
+import matplotlib.pyplot as plt
+from scipy import stats
+
+x = [89,43,36,36,95,10,66,34,38,20,26,29,48,64,6,5,36,66,72,40]
+y = [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]
+
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+
+def myfunc(x):
+  return slope * x + intercept
+
+mymodel = list(map(myfunc, x))
+
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+
+#Polinomyal regression
+import numpy
+import matplotlib.pyplot as plt
+from sklearn.metrics import r2_score
+
+x = [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]
+y = [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]
+
+mymodel = numpy.poly1d(numpy.polyfit(x, y, 3))
+
+myline = numpy.linspace(1, 22, 100)
+
+plt.scatter(x, y)
+plt.plot(myline, mymodel(myline))
+plt.show()
+
+print(r2_score(y, mymodel(x)))
+speed = mymodel(17)
+print(speed)
